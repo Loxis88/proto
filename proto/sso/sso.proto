@@ -1,0 +1,42 @@
+// proto/sso/sso.proto
+
+// Версия ProtoBuf
+syntax = "proto3";
+
+package auth;
+
+option go_package = "my.sso.v1;ssov1";
+
+service Auth {
+  // Register registers a new user
+  rpc Register (RegisterRequest) returns (RegisterResponse);
+  // Login logins user and return auth token
+  rpc Login (LoginRequest) returns (LoginResponse);
+}
+
+/*
+musthave
+service Permissions {
+  GetUserPermissions(GetUserPermissionRequest) returns UserPermissions
+}
+ */
+
+message RegisterRequest {
+  string username = 1; // username of user to register.
+  string email = 2; // email of user to register.
+  string password = 3; // password of user to register.
+}
+
+message RegisterResponse {
+  int64 id = 1; // ID of registered user.
+}
+
+message LoginRequest {
+  string username = 1; // username of user to login.
+  string password = 2; // password of user to login.
+  int32 app_id = 3; // ID of the app to login to.
+}
+
+message LoginResponse {
+  string token = 1; // Auth token of logged user.
+}
